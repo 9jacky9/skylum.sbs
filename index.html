@@ -58,6 +58,7 @@
   </script>
 
   <link rel="stylesheet" href="style.css">
+<style id="maintenance-anchor-offset">#pricing{scroll-margin-top:180px;}</style>
 </head>
 <body>
 
@@ -145,7 +146,7 @@
         <a href="https://ww012.twilightaff.com/#/?code=A56DH1Af" target="_blank" rel="nofollow" class="btn-editorial btn-terracotta">
           立即开始免费试用
         </a>
-        <a href="#plans" target="_blank" class="btn-editorial btn-quill-outline">
+        <a href="#pricing" class="btn-editorial btn-quill-outline">
           查看套餐资费
         </a>
       </div>
@@ -421,5 +422,23 @@
     });
   });
   </script>
+<script id="maintenance-anchor-offset-script">
+(() => {
+  const targets = ["pricing"];
+  const headers = [...document.querySelectorAll('header,nav,[class*="nav"],[class*="header"]')];
+  const update = () => {
+    const height = Math.max(0, ...headers.map(el => {
+      const box = el.getBoundingClientRect();
+      const position = getComputedStyle(el).position;
+      return ['fixed','sticky'].includes(position) && box.width > innerWidth / 2 && box.height < 400 ? box.height : 0;
+    }));
+    targets.forEach(id => { const el = document.getElementById(id); if (el) el.style.scrollMarginTop = Math.ceil(height + 16) + 'px'; });
+  };
+  update();
+  addEventListener('resize', update, {passive: true});
+  if ('ResizeObserver' in window) { const observer = new ResizeObserver(update); headers.forEach(el => observer.observe(el)); }
+  if (document.fonts) document.fonts.ready.then(update);
+})();
+</script>
 </body>
 </html>
